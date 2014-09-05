@@ -1,3 +1,5 @@
 *.o
 naivesearch
 TODO.org
+sicp.texi
+tests
