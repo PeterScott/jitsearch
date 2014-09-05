@@ -1,5 +1,4 @@
 // Naive string search: a baseline for everything that's coming next.
-
 int naiveSearch(const char *restrict needle, int needleLen,
                 const char *restrict haystack, int haystackLen) {
     if (needleLen > haystackLen) return -1;

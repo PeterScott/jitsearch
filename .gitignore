@@ -3,3 +3,5 @@ naivesearch
 TODO.org
 sicp.texi
 tests
+jitnaive
+jitnaive.h
