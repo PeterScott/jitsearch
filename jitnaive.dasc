@@ -30,28 +30,20 @@ void traceChar(char c) {
 |  call rax
 |.endmacro
 
+dasm_State *state;
+void *globals[ident_MAX];
 #define Dst &state
 
-int main(int argc, char *argv[]) {
-    char *needle = "hello";
-    int needleLen = strlen(needle);
-
-    dasm_State *state;
-    void *globals[ident_MAX];
-    dasm_init(&state, 1);
-    dasm_setupglobal(&state, globals, ident_MAX);
-    dasm_setup(&state, actions);
-
+void emitSearchCodeForNeedle(char *needle) {
+    char c;
     |  mov STARTPTR, rdi
     |  mov ENDPTR, rsi
     |  mov POS, STARTPTR
     |1:
     |  cmp POS, ENDPTR; jge >3
-    |  cmp byte [POS+0], 104; jne >2
-    |  cmp byte [POS+1], 101; jne >2
-    |  cmp byte [POS+2], 108; jne >2
-    |  cmp byte [POS+3], 108; jne >2
-    |  cmp byte [POS+4], 111; jne >2
+    for (int i = 0; needle[i]; i++) {
+        |  cmp byte [POS+(i)], (needle[i]); jne >2
+    }
     |  mov rax, POS; sub rax, STARTPTR
     |  ret
     |2:
@@ -60,6 +52,17 @@ int main(int argc, char *argv[]) {
     |3:
     |  mov eax, -1
     |  ret
+}
+
+int main(int argc, char *argv[]) {
+    char *needle = "hello";
+    int needleLen = strlen(needle);
+
+    dasm_init(&state, 1);
+    dasm_setupglobal(&state, globals, ident_MAX);
+    dasm_setup(&state, actions);
+
+    emitSearchCodeForNeedle("hello");
 
     // Link the code and write it to executable memory.
     int (*fptr)(char *start, char *end) = jitcode(&state);
