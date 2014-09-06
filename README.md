@@ -77,7 +77,7 @@ Well! There's some scaffolding involved, but let's handwave that away for now. H
 
 ## Faster! It can be faster!
 
-I thought of a trick: compare more than one byte at a time! How about, say, *four* bytes at a time? If the needle is more than four bytes long, then there's definitely potential for this. Now, you may be saying to yourself, "unaligned reads are slow." On Intel's processors, that stopped being true around the Nehalem microarchitecture. So, let's emit code to search four bytes at a time until we're out of four-byte pieces of the needle, and then use byte-at-a-time search for the rest:
+I thought of a trick: compare more than one byte at a time! How about, say, *four* bytes at a time? If the needle is more than four bytes long, then there's definitely potential for this. Now, you may be saying to yourself, "What? Unaligned reads are slow!" On Intel's processors, that stopped being true around the Nehalem microarchitecture. So, let's emit code to search four bytes at a time until we're out of four-byte pieces of the needle, and then use byte-at-a-time search for the rest:
 
 ```c
 void emitSearchCodeForNeedleWordAtATime(char *needle, int needleLen) {
