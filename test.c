@@ -59,7 +59,7 @@ static void benchmark(void) {
 int main(void) {
     testBasicSearch();
     testEmptyStrings();
-    while (1) benchmark();
+    benchmark();
     return 0;
 }
     
