@@ -22,7 +22,6 @@
 |.define ENDPTR, rsi
 // other vars: pos, char
 |.define POS, rax
-|.define CHAR, rbx
 
 static void traceChar(char c) {
     printf("trace: %c\n", c);
